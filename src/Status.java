@@ -16,19 +16,19 @@ public class Status {
 
     // "Fúria": habilidade ativa de GUERREIRO
     // Perde metade da vida em troca de dobro de dano
-    public static Status statusFuria(Jogador jogador){
+    public static Status statusFuria(Entidade entidade){
         return new Status(
                 "Fúria",
                 0,
-                jogador.vidaAtual / 2,
-                jogador.atkBase * 1,
+                entidade.vidaAtual / 2,
+                entidade.atkBase * 1,
                 0
         );
     }
 
     // "Evasão": habilidade ativa de LADINO
     // Desvia do próximo ataque do oponente
-    public static Status statusEvasao(Jogador jogador){
+    public static Status statusEvasao(Entidade entidade){
         return new Status(
                 "Evasão",
                 3,

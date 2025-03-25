@@ -1,6 +1,4 @@
-import java.util.Objects;
-
-public class Guerreiro extends Jogador {
+public class Guerreiro extends Entidade {
     // Inicialização com atributos
     public Guerreiro(String nome, Arma armaAtual) {
         super(nome, armaAtual);

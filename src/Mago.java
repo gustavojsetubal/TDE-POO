@@ -1,4 +1,4 @@
-public class Mago extends Jogador {
+public class Mago extends Entidade {
     // Inicialização com atributos
     public Mago(String nome, Arma armaAtual) {
         super(nome, armaAtual);

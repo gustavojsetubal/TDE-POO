@@ -1,4 +1,4 @@
-public class Ladino extends Jogador {
+public class Ladino extends Entidade {
     // Inicialização com atributos
     public Ladino(String nome, Arma armaAtual) {
         super(nome, armaAtual);
