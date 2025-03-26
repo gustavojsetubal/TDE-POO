@@ -2,17 +2,25 @@ public class Guerreiro extends Entidade {
     // Inicialização com atributos
     public Guerreiro(String nome, Arma armaAtual) {
         super(nome, armaAtual);
-        this.vidaMaxima = 75;
+        this.vidaMaxima = 500;
         this.vidaAtual = vidaMaxima;
-        this.atkBase = 25;
+        this.atkBase = 125;
     }
 
     @Override // Fúria: habilidade ativa de classe
-    public void habilidade(Boolean estado) {
-        if (estado){
-            this.listaAtributos.add(Status.statusFuria(this));
+    public boolean habilidade(Boolean estado) {
+        if (cooldownHabilidade > 0) {
+            System.out.println("A habilidade falhou!");
+            System.out.println("teste");
         } else {
-            this.listaAtributos.removeIf( status -> status.nome.equals("Fúria"));
+            if (estado){
+                cooldownHabilidade = 1;
+                System.out.println(nome + " se enfurece!");
+                this.listaAtributos.add(Status.statusFuria(this, GameHandler.rodada));
+            } else {
+                System.out.println("A raiva de " + nome + " se esvaiu...");
+            }
         }
+        return false;
     }
 }

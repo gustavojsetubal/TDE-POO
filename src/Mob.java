@@ -2,33 +2,40 @@ import java.util.List;
 import java.util.Random;
 
 public class Mob extends Entidade{
-    Random rng = new Random();
+    static Random rng = new Random(System.currentTimeMillis());
 
     // Construtor simples, sem atributos
     public Mob(String nome, Arma armaAtual, int vidaMaxima, int atkBase) {
         super(nome, armaAtual);
         this.vidaMaxima = vidaMaxima;
+        this.vidaAtual = vidaMaxima;
         this.atkBase = atkBase;
+        this.defesa = false;
 
     }
 
     // Geração
     static int genVidaMaxima;
     static int genAtkMaximo;
-    public static void gerarMob(Mob adversario, int salaAtual, Boolean isBoss) {
-        float bossMultiplier = 0;
+    static float genMultiplier(){
+        return (float) rng.nextDouble(0.1);
+    }
+
+    public static Mob gerarMob(Mob adversario, int salaAtual, Boolean isBoss) {
+        float bossMultiplier = 1;
         if (isBoss) {
             bossMultiplier = 2;
         }
-        genVidaMaxima = (int) Math.round(3000 * (0.1 * salaAtual) * bossMultiplier);
+        genVidaMaxima = (int) Math.round(3000 * (genMultiplier() * salaAtual) * bossMultiplier);
+        genAtkMaximo = (int) Math.round(1000 * (genMultiplier() * salaAtual) * bossMultiplier);
 
-        adversario = new Mob(NameHandler.generateMonster(), null, genVidaMaxima, genAtkMaximo);
+        return new Mob(NameHandler.generateMonster(), null, genVidaMaxima, genAtkMaximo);
     }
 
 
 
-    // Ação
-    public void defineAction(Entidade jogador){
+    // Seleção de ação
+    public boolean defineAction(Entidade jogador){
         int action = 0;
         if (vidaAtual / vidaMaxima < 0.25){ // Se a vida for menor que 25%
             action = rng.nextInt(3);
@@ -38,17 +45,18 @@ public class Mob extends Entidade{
 
         switch(action){
             case 0:
-                ferir(jogador);
-                break;
+                return ferir(jogador);
 
             case 1:
-                defender(true);
-                break;
+                return defender(true);
 
             case 2:
-                curar();
+                return curar();
+
+            default:
+                System.out.println("Opção inválida.");
         }
+        return false;
 
     }
-
 }

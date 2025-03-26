@@ -1,3 +1,3 @@
 public enum Turno {
-    JOGADOR, MAQUINA
+    JOGADOR, ADVERSARIO
 }
