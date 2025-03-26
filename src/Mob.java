@@ -3,14 +3,18 @@ import java.util.Random;
 
 public class Mob extends Entidade{
     static Random rng = new Random(System.currentTimeMillis());
+    boolean isBoss;
+
+
 
     // Construtor simples, sem atributos
-    public Mob(String nome, Arma armaAtual, int vidaMaxima, int atkBase) {
+    public Mob(String nome, Arma armaAtual, int vidaMaxima, int atkBase, boolean isBoss) {
         super(nome, armaAtual);
         this.vidaMaxima = vidaMaxima;
         this.vidaAtual = vidaMaxima;
         this.atkBase = atkBase;
         this.defesa = false;
+        this.isBoss = isBoss;
 
     }
 
@@ -20,6 +24,8 @@ public class Mob extends Entidade{
     static float genMultiplier(){
         return (float) rng.nextDouble(0.1);
     }
+
+
 
     public static Mob gerarMob(Mob adversario, int salaAtual, Boolean isBoss) {
         float bossMultiplierVida = 1;
@@ -32,10 +38,31 @@ public class Mob extends Entidade{
         genAtkMaximo = (int) Math.round(750 * (genMultiplier() * salaAtual) * bossMultiplierAtk);
 
         if (isBoss) {
-            return new Mob(NameHandler.generateMonster() + "[BOSS]", null, genVidaMaxima, genAtkMaximo);
+            return new Mob(NameHandler.generateMonster() + " [BOSS]", null, genVidaMaxima, genAtkMaximo,true);
         }
 
-        return new Mob(NameHandler.generateMonster(), null, genVidaMaxima, genAtkMaximo);
+
+        return new Mob(NameHandler.generateMonster(), null, genVidaMaxima, genAtkMaximo,false);
+    }
+
+    @Override
+    public boolean habilidade(Boolean estado) {
+        if (isBoss) {
+            if (estado){
+                if (cooldownHabilidade > 0) {
+                    System.out.println("A habilidade falhou!");
+                    return false;
+                }
+                cooldownHabilidade = 4;
+                System.out.println("[+Frenesi] " + nome + " começou a preparar um grande ataque...");
+                this.listaAtributos.add(Status.statusFrenesi(this, GameHandler.rodada));
+                return false;
+            } else {
+                System.out.println("[-Frenesi] " + "A fúria de " + nome + " te alcançou!");
+                return GameHandler.jogador.handleDanoRecebido(atkBase * 2);
+            }
+        }
+        return false;
     }
 
 
@@ -46,6 +73,7 @@ public class Mob extends Entidade{
     // Ataque: 60% (100 - 40)
     // Defesa: 30% (40 - 10)
     // Cura: 10% (10 - 0)
+    // Habilidade(BOSS): 15% da chance de defesa
 
     public boolean defineAction(Entidade jogador){
         int action = 0;
@@ -58,7 +86,15 @@ public class Mob extends Entidade{
         if (action > 40){
             return ferir(jogador);
         } else if (action > 10){
-            return defender(true);
+            if (isBoss){
+                int ultChance = rng.nextInt(100);
+                if (ultChance >= 50){
+                    return habilidade(true);
+                } else {
+                    return defender(true);
+                }
+            }
+
         } else if (action <= 10){
             return curar();
         }

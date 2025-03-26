@@ -105,6 +105,17 @@ public class Entidade {
 
     }
 
+    public boolean handleIdle(){
+        for (Status atributo : listaAtributos){
+            if (atributo.statusIdle){
+                System.out.println(atributo.statusIdleMsg);
+                return true;
+            }
+
+        }
+        return false;
+    }
+
 
     // Ação: Ferir
     public boolean ferir(Entidade adversario){

@@ -107,10 +107,12 @@ public class GameHandler {
                 System.out.println("Turno: " + turnoAtual);
                 System.out.println();
                 jogador.cooldownHabilidade--;
-                if (jogador.defineAction(adversario)){
-                    batalha = false;
-                    break;
-                };
+                if (!jogador.handleIdle()){
+                    if (jogador.defineAction(adversario)){
+                        batalha = false;
+                        break;
+                    }
+                }
                 jogador.handleStatus();
                 pressEnterToContinue();
                 turnoAtual = Turno.ADVERSARIO;// Passa para a máquina
@@ -121,9 +123,11 @@ public class GameHandler {
                 System.out.println("Turno: " + turnoAtual);
                 System.out.println("\n");
                 adversario.cooldownHabilidade--;
-                if (adversario.defineAction(jogador)){
-                    break;
-                };
+                if (!adversario.handleIdle()){
+                    if (adversario.defineAction(jogador)){
+                        break;
+                    }
+                }
                 adversario.handleStatus();
                 pressEnterToContinue();
                 turnoAtual = Turno.JOGADOR; // Volta para o jogador
