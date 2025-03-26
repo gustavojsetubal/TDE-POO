@@ -31,8 +31,7 @@ public class GameHandler {
     }
 
     public void iniciarJogo() {
-        System.out.println("Iniciando o jogo...");
-        System.out.println();
+        System.out.println("-= cmdventure =- \n");
         System.out.println("-= Insira um nome =-");
         String playerName = input.next();
         System.out.println("-= Escolha sua classe =-");
