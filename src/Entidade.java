@@ -92,6 +92,7 @@ public class Entidade {
         if (!toRemove.isEmpty()){
             habilidade(false);
             listaAtributos.removeAll(toRemove);
+            toRemove.clear();
         }
         listaAtributos.removeAll(toRemove);
         for (Status atributo : listaAtributos){
@@ -100,7 +101,6 @@ public class Entidade {
         }
         if (dmgStatus > 0){
             handleDanoRecebido(dmgStatus);
-            System.out.println(dmgStatus);
         }
 
     }
@@ -111,7 +111,7 @@ public class Entidade {
         int dmg = handleDanoAtual();
 
         try {
-            System.out.println(nome + " ataca " + adversario.nome + "com " + armaAtual.getNome());
+            System.out.println(nome + " ataca " + adversario.nome + " com " + armaAtual.getNome());
         } catch (NullPointerException e){
             System.out.println(nome + " ataca " + adversario.nome);
         }
@@ -127,7 +127,7 @@ public class Entidade {
 
     // Ação: Curar
     public boolean curar(){
-        handleCura((int) (vidaMaxima * 0.3));
+        handleCura((int) (vidaMaxima * 0.15));
         return false;
     }
 

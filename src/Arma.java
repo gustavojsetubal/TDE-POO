@@ -8,7 +8,7 @@ public class Arma {
 
     public final String nome;
     public final int atkExtra;
-    public final int raridade; // 0 = comum, 1 = incomum, 2 = raro, 3 = épico, 4 = lendário
+    public final int raridade; // 1 = comum, 2 = incomum, 3 = raro, 4 = épico, 5 = lendário
 
     public Arma(String nome, int atkExtra, int raridade) {
         this.nome = nome;
@@ -17,30 +17,30 @@ public class Arma {
     }
 
     // Probabilidades de raridade
-    private static final int raridadeComum = 50;
-    private static final int raridadeIncomum = 30;
-    private static final int raridadeRaro = 15;
-    private static final int raridadeEpico = 4;
-    private static final int raridadeLendario = 1;
+    // Comum: 50% (100 - 50)
+    // Incomum: 30% (50 - 20)
+    // Raro: 15% (20 - 5)
+    // Épico: 4% (5 - 1)
+    // Lendário: 1% (1)
 
     // Geração
     static int genAtkExtra;
     static int genRaridade;
     public static Arma gerarArma(int salaAtual) {
         int genRaridadeRng = rng.nextInt(100);
-        if (genRaridadeRng <= raridadeComum && genRaridadeRng > raridadeIncomum){
-            genRaridade = 0;
-        } else if (genRaridadeRng <= raridadeIncomum && genRaridadeRng > raridadeRaro) {
+        if (genRaridadeRng > 50){
             genRaridade = 1;
-        } else if (genRaridadeRng <= raridadeRaro && genRaridadeRng > raridadeEpico) {
+        } else if (genRaridadeRng > 20) {
             genRaridade = 2;
-        } else if (genRaridadeRng <= raridadeEpico && genRaridadeRng > raridadeLendario) {
+        } else if (genRaridadeRng > 5) {
             genRaridade = 3;
-        } else if (genRaridadeRng <= raridadeLendario) {
+        } else if (genRaridadeRng > 1) {
             genRaridade = 4;
+        } else if (genRaridadeRng <= 1) {
+            genRaridade = 5;
         }
 
-        genAtkExtra = (int) Math.round(500 * (0.1 * salaAtual) * genRaridade + 1);
+        genAtkExtra = (int) Math.round(5 + (0.15 * rng.nextInt(salaAtual)) * genRaridade);
 
         return new Arma(NameHandler.generateWeapon(), genAtkExtra, genRaridade);
 
@@ -53,13 +53,13 @@ public class Arma {
     }
 
     public String getRaridade(){
-        if (raridade == 0) {
+        if (raridade == 1) {
             return "Comum";
-        } else if (raridade == 1){
-            return "Incomum";
         } else if (raridade == 2){
-            return "Raro";
+            return "Incomum";
         } else if (raridade == 3){
+            return "Raro";
+        } else if (raridade == 4){
             return "Épico";
         } else {
             return "Lendário";

@@ -9,17 +9,19 @@ public class Ladino extends Entidade {
 
     @Override // Evasão: habilidade ativa de classe
     public boolean habilidade(Boolean estado) {
-        if (cooldownHabilidade > 0) {
-            System.out.println("A habilidade falhou!");
-            return false;
-        }
         if (estado){
-            cooldownHabilidade = 2;
-            System.out.println(nome + " se prepara pra desviar!");
+            if (cooldownHabilidade > 0) {
+                System.out.println("A habilidade falhou!");
+                return false;
+            }
+            cooldownHabilidade = 3;
+            System.out.println("[+Evasão] " + nome + " se prepara pra desviar!");
             this.listaAtributos.add(Status.statusEvasao(this, GameHandler.rodada));
         } else if (!estado){
-            System.out.println(nome + " abaixa novamente a guarda...");
+            System.out.println("[-Evasão] " + nome + " abaixa  a guarda...");
         }
         return false;
     }
+
+
 }

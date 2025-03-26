@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class GameHandler {
-    public Entidade jogador;
-    public Mob adversario;
+    public static Entidade jogador;
+    public static Mob adversario;
 
     private Turno turnoAtual;
     private int salas;
@@ -33,9 +33,9 @@ public class GameHandler {
     public void iniciarJogo() {
         System.out.println("Iniciando o jogo...");
         System.out.println();
-        System.out.println("Insira um nome:");
+        System.out.println("-= Insira um nome =-");
         String playerName = input.next();
-        System.out.println("Escolha sua classe:");
+        System.out.println("-= Escolha sua classe =-");
 
         // Seleção de classe
         int escolha = 0;
@@ -94,7 +94,7 @@ public class GameHandler {
         batalha = true;
 
         // Iniciar batalha
-        System.out.println("\n\n\nSala: " + salas);
+        System.out.println("\n\n\n-= Sala " + salas + " =-");
         while (batalha){ // Enquanto a sala não estiver completa
             displayScenario(jogador, adversario);
             if (turnoAtual == Turno.JOGADOR) {
@@ -145,9 +145,9 @@ public class GameHandler {
             int escolha = 0;
             boolean escolhaValida = false;
             while (!escolhaValida){
-                System.out.println("1) " + loot1 + loot1.mostrarUpgrade());
-                System.out.println("2) " + loot2 + loot2.mostrarUpgrade());
-                System.out.println("3) " + loot3);
+                System.out.println("1) Benção: " + loot1 + loot1.mostrarUpgrade());
+                System.out.println("2) Benção: " + loot2 + loot2.mostrarUpgrade());
+                System.out.println("3) Arma: " + loot3);
                 try{
                     escolha = Integer.parseInt(input.next());
                     if (escolha == 1 || escolha == 2 || escolha == 3){
@@ -177,8 +177,8 @@ public class GameHandler {
             salas += 1;
             iniciarSala();
         } else {
-            System.out.println("Fim de jogo");
-            System.out.println("Você sobreviveu " + salas + "dentro da masmorra.");
+            System.out.println("\n\n-= Fim de jogo =-");
+            System.out.println("Você sobreviveu " + salas + " salas dentro da masmorra.");
         }
     }
 }

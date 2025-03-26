@@ -22,12 +22,14 @@ public class Mob extends Entidade{
     }
 
     public static Mob gerarMob(Mob adversario, int salaAtual, Boolean isBoss) {
-        float bossMultiplier = 1;
+        float bossMultiplierVida = 1;
+        float bossMultiplierAtk = 1;
         if (isBoss) {
-            bossMultiplier = 2;
+            bossMultiplierVida = 2;
+            bossMultiplierAtk = 1.25F;
         }
-        genVidaMaxima = (int) Math.round(3000 * (genMultiplier() * salaAtual) * bossMultiplier);
-        genAtkMaximo = (int) Math.round(1000 * (genMultiplier() * salaAtual) * bossMultiplier);
+        genVidaMaxima = (int) Math.round(1000 * (genMultiplier() * salaAtual) * bossMultiplierVida);
+        genAtkMaximo = (int) Math.round(750 * (genMultiplier() * salaAtual) * bossMultiplierAtk);
 
         return new Mob(NameHandler.generateMonster(), null, genVidaMaxima, genAtkMaximo);
     }
@@ -35,26 +37,26 @@ public class Mob extends Entidade{
 
 
     // Seleção de ação
+    // Probabilidades de raridade
+
+    // Ataque: 60% (100 - 40)
+    // Defesa: 30% (40 - 10)
+    // Cura: 10% (10 - 0)
+
     public boolean defineAction(Entidade jogador){
         int action = 0;
-        if (vidaAtual / vidaMaxima < 0.25){ // Se a vida for menor que 25%
-            action = rng.nextInt(3);
+        if ((double) vidaAtual / vidaMaxima < 0.25){ // Se a vida for menor que 25%
+            action = rng.nextInt(100);
         } else {
-            action = rng.nextInt(2);
+            action = rng.nextInt(80) + 20;
         }
 
-        switch(action){
-            case 0:
-                return ferir(jogador);
-
-            case 1:
-                return defender(true);
-
-            case 2:
-                return curar();
-
-            default:
-                System.out.println("Opção inválida.");
+        if (action > 40){
+            return ferir(jogador);
+        } else if (action > 10){
+            return defender(true);
+        } else if (action <= 10){
+            return curar();
         }
         return false;
 

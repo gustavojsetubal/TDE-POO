@@ -15,10 +15,10 @@ public class Guerreiro extends Entidade {
         } else {
             if (estado){
                 cooldownHabilidade = 1;
-                System.out.println(nome + " se enfurece!");
+                System.out.println("[+Fúria] " + nome + " se enfurece!");
                 this.listaAtributos.add(Status.statusFuria(this, GameHandler.rodada));
             } else {
-                System.out.println("A raiva de " + nome + " se esvaiu...");
+                System.out.println("[-Fúria] " + "A raiva de " + nome + " se esvaiu...");
             }
         }
         return false;
