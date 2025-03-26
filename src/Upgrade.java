@@ -3,10 +3,10 @@ import java.util.Random;
 public class Upgrade {
     static Random rng = new Random(System.currentTimeMillis());
 
-    public String nome;
-    public int curaVida;
-    public int aumentoVida;
-    public int aumentoDano;
+    private final String nome;
+    private final int curaVida;
+    private final int aumentoVida;
+    private final int aumentoDano;
 
     public Upgrade(String nome, int aumentoVida, int aumentoDano, int curaVida) {
         this.nome = nome;
@@ -51,6 +51,18 @@ public class Upgrade {
         jogador.atkBase += aumentoDano;
         jogador.vidaMaxima += aumentoVida;
         jogador.vidaAtual += curaVida;
+    }
+
+    public int getCuraVida() {
+        return curaVida;
+    }
+
+    public int getAumentoVida() {
+        return aumentoVida;
+    }
+
+    public int getAumentoDano() {
+        return aumentoDano;
     }
 
     @Override

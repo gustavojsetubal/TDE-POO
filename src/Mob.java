@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Mob extends Entidade{
     static Random rng = new Random(System.currentTimeMillis());
-    boolean isBoss;
+    public boolean isBoss;
 
 
 

@@ -7,18 +7,18 @@ public class NameHandler {
     static Random rng = new Random(System.currentTimeMillis());
 
     // Nomes
-    static List<String> monsterNameBank = new ArrayList<>(Arrays.asList(
+    private static List<String> monsterNameBank = new ArrayList<>(Arrays.asList(
             "Dragão", "Kobold", "Draugr", "Orc", "Goblin", "Espectro", "Lich", "Gnoll", "Troll", "Esqueleto",
             "Zumbi", "Golem", "Harpia", "Mantícora", "Basilisco", "Quimera", "Beholder", "Gárgula", "Wyvern", "Vampiro"
     ));
 
-    static List<String> weaponNameBank = new ArrayList<>(Arrays.asList(
+    private static List<String> weaponNameBank = new ArrayList<>(Arrays.asList(
             "Espada Longa", "Machado de Guerra", "Adaga", "Martelo de Batalha", "Arco Longo",
             "Besta", "Lança", "Cajado", "Maça", "Foice", "Chicote", "Florete", "Clava",
             "Katana", "Espada Curta", "Mangual", "Tridente", "Sabre", "Alabarda", "Rapieira"
     ));
 
-    static List<String> upgradeNameBank = new ArrayList<>(Arrays.asList(
+    private static List<String> upgradeNameBank = new ArrayList<>(Arrays.asList(
             "Benção", "Luz", "Aura", "Essência", "Chama",
             "Eco", "Vínculo", "Cântico", "Reflexo", "Vontade",
             "Elo", "Visão", "Sopro", "Mantra", "Ascensão",
@@ -26,21 +26,21 @@ public class NameHandler {
     ));
 
     // Adjetivos
-    static List<String> monsterAdjectiveBank = new ArrayList<>(Arrays.asList(
+    private static List<String> monsterAdjectiveBank = new ArrayList<>(Arrays.asList(
             "Sombrio", "Voraz", "Ancestral", "Profano", "Espectral",
             "Sanguinário", "Implacável", "Maldito", "Colossal", "Frenético",
             "Corrompido", "Esquecido", "Poderoso", "Sinistro", "Abissal",
             "Cansado", "Sujo", "Grosseiro", "Enfurecido", "Pálido"
     ));
 
-    static List<String> weaponAdjectiveBank = new ArrayList<>(Arrays.asList(
+    private static List<String> weaponAdjectiveBank = new ArrayList<>(Arrays.asList(
             "Afiado", "Enferrujado", "Destruidor", "Caótico", "Letal",
             "Antigo", "Pesado", "Quebrado", "Sagrado", "Macabro",
             "Violento", "Sinuoso", "Gélido", "Flamejante", "Rachado",
             "Brilhante", "Desgastado", "Venenoso", "Sombrio", "Amaldiçoado"
     ));
 
-    static List<String> upgradeAdjectiveBank = new ArrayList<>(Arrays.asList(
+    private static List<String> upgradeAdjectiveBank = new ArrayList<>(Arrays.asList(
             "Forte", "Gélido", "Eterno", "Radiante", "Sombrio",
             "Celestial", "Ancestral", "Efêmero", "Sagrado", "Profano",
             "Incandescente", "Sereno", "Caótico", "Ígneo", "Místico",

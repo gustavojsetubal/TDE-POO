@@ -7,8 +7,8 @@ public class Arma {
     static Random rng = new Random(System.currentTimeMillis());
 
     public final String nome;
-    public final int atkExtra;
-    public final int raridade; // 1 = comum, 2 = incomum, 3 = raro, 4 = épico, 5 = lendário
+    private final int atkExtra;
+    private final int raridade; // 1 = comum, 2 = incomum, 3 = raro, 4 = épico, 5 = lendário
 
     public Arma(String nome, int atkExtra, int raridade) {
         this.nome = nome;

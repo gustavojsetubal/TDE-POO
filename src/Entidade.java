@@ -39,7 +39,7 @@ public class Entidade {
         int atkEfeito = 0;
         int armaDano = 0;
         for (Status atributo : listaAtributos){
-            atkEfeito += atributo.atkChange;
+            atkEfeito += atributo.getAtkChange();
         }
 
         // Lidar com
@@ -96,7 +96,7 @@ public class Entidade {
         }
         listaAtributos.removeAll(toRemove);
         for (Status atributo : listaAtributos){
-            dmgStatus += atributo.dmgStatus;
+            dmgStatus += atributo.getDmgStatus();
             atributo.tickStatus(this);
         }
         if (dmgStatus > 0){
@@ -107,8 +107,8 @@ public class Entidade {
 
     public boolean handleIdle(){
         for (Status atributo : listaAtributos){
-            if (atributo.statusIdle){
-                System.out.println(atributo.statusIdleMsg);
+            if (atributo.isStatusIdle()){
+                System.out.println(atributo.getStatusIdleMsg());
                 return true;
             }
 

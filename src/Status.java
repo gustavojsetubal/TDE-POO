@@ -3,13 +3,13 @@ import java.util.List;
 
 public class Status {
     public String nome;
-    public int duracao; // Duração da habilidade, caso aplicável
-    public int dmgStatus; // Dano causado pelo status
-    public int atkChange; // Alteração de atk causado com o status
-    public float dmgChange; // Alteração no dano recebido com o status, porcentagem descrita entre 0 e 1
-    public int turnosDesdeUso; // Turno em que se iniciou para contagem de cooldown
-    public boolean statusIdle; // Define se o status imobiliza a entidade
-    public String statusIdleMsg; // Define a mensagem que aparece quando statusIdle ativa
+    private int duracao; // Duração da habilidade, caso aplicável
+    private int dmgStatus; // Dano causado pelo status
+    private int atkChange; // Alteração de atk causado com o status
+    private float dmgChange; // Alteração no dano recebido com o status, porcentagem descrita entre 0 e 1
+    private int turnosDesdeUso; // Turno em que se iniciou para contagem de cooldown
+    private boolean statusIdle; // Define se o status imobiliza a entidade
+    private String statusIdleMsg; // Define a mensagem que aparece quando statusIdle ativa
 
 
     public Status(String nome, int duracao, int dmgStatus, int atkChange, float dmgChange) {
@@ -103,7 +103,34 @@ public class Status {
                 .anyMatch(atributo -> atributo.nome.equals(searchQuery));
     }
 
+    // Getters
+    public int getDuracao() {
+        return duracao;
+    }
 
+    public int getDmgStatus() {
+        return dmgStatus;
+    }
+
+    public int getAtkChange() {
+        return atkChange;
+    }
+
+    public float getDmgChange() {
+        return dmgChange;
+    }
+
+    public int getTurnosDesdeUso() {
+        return turnosDesdeUso;
+    }
+
+    public boolean isStatusIdle() {
+        return statusIdle;
+    }
+
+    public String getStatusIdleMsg() {
+        return statusIdleMsg;
+    }
 
     // Override de nomenclatura
     @Override
