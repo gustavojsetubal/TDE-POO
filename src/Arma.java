@@ -40,7 +40,7 @@ public class Arma {
             genRaridade = 5;
         }
 
-        genAtkExtra = (int) Math.round(5 + (0.15 * rng.nextInt(salaAtual)) * genRaridade);
+        genAtkExtra = (int) Math.round(5 + (0.15 * rng.nextInt(salaAtual)) + (genRaridade * GameHandler.jogador.atkBase * 0.1));
 
         return new Arma(NameHandler.generateWeapon(), genAtkExtra, genRaridade);
 

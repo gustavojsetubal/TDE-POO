@@ -31,6 +31,10 @@ public class Mob extends Entidade{
         genVidaMaxima = (int) Math.round(1000 * (genMultiplier() * salaAtual) * bossMultiplierVida);
         genAtkMaximo = (int) Math.round(750 * (genMultiplier() * salaAtual) * bossMultiplierAtk);
 
+        if (isBoss) {
+            return new Mob(NameHandler.generateMonster() + "[BOSS]", null, genVidaMaxima, genAtkMaximo);
+        }
+
         return new Mob(NameHandler.generateMonster(), null, genVidaMaxima, genAtkMaximo);
     }
 

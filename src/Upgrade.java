@@ -20,7 +20,7 @@ public class Upgrade {
     static int genAumentoDano;
     public static Upgrade gerarItem(int sala) {
         int tipo = rng.nextInt(4); // 0 = Vida, 1 = Dano, 2 = Cura
-        int atributo = (int) (1 + rng.nextInt(20) * rng.nextInt(sala));
+        int atributo = (int) (5 + rng.nextInt(20) * rng.nextInt(sala));
 
         if (tipo > 2) {
             atributo *= (int) (GameHandler.jogador.vidaMaxima * 0.1);
