@@ -53,18 +53,6 @@ public class Upgrade {
         jogador.vidaAtual += curaVida;
     }
 
-    public int getCuraVida() {
-        return curaVida;
-    }
-
-    public int getAumentoVida() {
-        return aumentoVida;
-    }
-
-    public int getAumentoDano() {
-        return aumentoDano;
-    }
-
     @Override
     public String toString() {
         return nome;

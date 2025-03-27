@@ -1,20 +1,20 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Entidade {
-    public String nome;
-    public int vidaAtual;
-    public int vidaMaxima;
-    public int atkBase;
-    public boolean defesa = false;
-    public Arma armaAtual = null;
-    public List<Status> listaAtributos = new ArrayList<>();
-    public int cooldownHabilidade = 0;
+    protected String nome;
+    protected int vidaAtual;
+    protected int vidaMaxima;
+    protected int atkBase;
+    protected boolean defesa = false;
+    protected Arma armaAtual = null;
+    protected List<Status> listaAtributos = new ArrayList<>();
+    protected int cooldownHabilidade = 0;
 
     Scanner input = new Scanner(System.in).useDelimiter("\n");
 
+    // Construtores
     // Construtor de Entidade Simples
     public Entidade(String nome, Arma armaAtual) {
         this.nome = nome;
@@ -34,6 +34,20 @@ public class Entidade {
         this.listaAtributos = listaAtributos;
     }
 
+
+    // Exibição de cenário de entidade
+    public void displayEntityScenario(){
+        try {
+            System.out.println(this.nome + " | " + this.vidaAtual + " / " + this.vidaMaxima + "HP " + this.listaAtributos + " | " + this.atkBase + " | " + this.armaAtual.getNome() + " (" + this.armaAtual.getRaridade() + "): " + this.armaAtual.getAtkExtra() + " ATK " );
+
+        } catch (NullPointerException error){
+            System.out.println(this.nome + " | " + this.vidaAtual + " / " + this.vidaMaxima + "HP " + this.listaAtributos + " | " + this.atkBase + " ATK " );
+        }
+    }
+
+
+
+    // Handlers
     // Handler de Dano Causado
     public int handleDanoAtual(){
         int atkEfeito = 0;
@@ -56,7 +70,7 @@ public class Entidade {
         // Checar se Evasão ativou
         if (Status.doesStatusExist("Evasão", listaAtributos)) {
             dmg -= dmg * 1;
-            System.out.println(nome + "se esquivou!");
+            System.out.println("[+Evasão] " + " se esquivou!");
             listaAtributos.remove(Status.searchStatus("Evasão", listaAtributos));
         }
 
@@ -105,6 +119,7 @@ public class Entidade {
 
     }
 
+    // Handler de turno inativo
     public boolean handleIdle(){
         for (Status atributo : listaAtributos){
             if (atributo.isStatusIdle()){
@@ -117,8 +132,9 @@ public class Entidade {
     }
 
 
-    // Ação: Ferir
-    public boolean ferir(Entidade adversario){
+    // Ações de jogo
+    // Ação: Atacar
+    public boolean atacar(Entidade adversario){
         int dmg = handleDanoAtual();
 
         try {
@@ -143,7 +159,7 @@ public class Entidade {
     }
 
     // Ação: Defender
-    public boolean defender(Boolean estado){
+    public boolean setDefesa(Boolean estado){
         this.defesa = estado;
         System.out.println(nome + " se prepara pro impacto!");
         return false;
@@ -155,7 +171,7 @@ public class Entidade {
         return false;
     }
 
-    // Seleção de ação
+    // Seleção de ação do jogador
     public boolean defineAction(Mob adversario){
         System.out.println("Escolha sua ação:");
 
@@ -183,9 +199,9 @@ public class Entidade {
         System.out.println("\n\n\n");
         switch (escolha){
             case 1:
-                return ferir(adversario);
+                return atacar(adversario);
             case 2:
-                return defender(true);
+                return setDefesa(true);
             case 3:
                 return curar();
             case 4:
@@ -204,12 +220,13 @@ public class Entidade {
         return vidaAtual > 0;
     }
 
-    public String getNome() {
-        return nome;
+    // Get & Set: Arma atual
+    public Arma getArmaAtual() {
+        return armaAtual;
     }
 
-    public int getVidaAtual() {
-        return vidaAtual;
+    public void setArmaAtual(Arma armaAtual) {
+        this.armaAtual = armaAtual;
     }
 
     @Override

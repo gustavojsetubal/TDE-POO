@@ -1,10 +1,8 @@
-import java.util.List;
 import java.util.Random;
 
 public class Mob extends Entidade{
     static Random rng = new Random(System.currentTimeMillis());
     public boolean isBoss;
-
 
 
     // Construtor simples, sem atributos
@@ -55,7 +53,7 @@ public class Mob extends Entidade{
                 }
                 cooldownHabilidade = 4;
                 System.out.println("[+Frenesi] " + nome + " começou a preparar um grande ataque...");
-                this.listaAtributos.add(Status.statusFrenesi(this, GameHandler.rodada));
+                this.listaAtributos.add(Status.statusFrenesi(this, GameHandler.getRodadaAtual()));
                 return false;
             } else {
                 System.out.println("[-Frenesi] " + "A fúria de " + nome + " te alcançou!");
@@ -84,14 +82,14 @@ public class Mob extends Entidade{
         }
 
         if (action > 40){
-            return ferir(jogador);
+            return atacar(jogador);
         } else if (action > 10){
             if (isBoss){
                 int ultChance = rng.nextInt(100);
                 if (ultChance >= 50){
                     return habilidade(true);
                 } else {
-                    return defender(true);
+                    return setDefesa(true);
                 }
             }
 

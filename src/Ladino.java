@@ -16,7 +16,7 @@ public class Ladino extends Entidade {
             }
             cooldownHabilidade = 3;
             System.out.println("[+Evasão] " + nome + " se prepara pra desviar!");
-            this.listaAtributos.add(Status.statusEvasao(this, GameHandler.rodada));
+            this.listaAtributos.add(Status.statusEvasao(this, GameHandler.getRodadaAtual()));
         } else if (!estado){
             System.out.println("[-Evasão] " + nome + " abaixa  a guarda...");
         }

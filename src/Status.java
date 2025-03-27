@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class Status {
@@ -41,7 +40,7 @@ public class Status {
     public static Status statusFuria(Entidade entidade, int turnoUso){
         int atkArma;
         try {
-            atkArma = entidade.armaAtual.getAtkExtra();
+            atkArma = entidade.getArmaAtual().getAtkExtra();
         } catch (NullPointerException e) {
             atkArma = 0;
         }
@@ -104,24 +103,12 @@ public class Status {
     }
 
     // Getters
-    public int getDuracao() {
-        return duracao;
-    }
-
     public int getDmgStatus() {
         return dmgStatus;
     }
 
     public int getAtkChange() {
         return atkChange;
-    }
-
-    public float getDmgChange() {
-        return dmgChange;
-    }
-
-    public int getTurnosDesdeUso() {
-        return turnosDesdeUso;
     }
 
     public boolean isStatusIdle() {

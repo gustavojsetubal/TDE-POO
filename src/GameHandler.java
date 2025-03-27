@@ -4,10 +4,10 @@ public class GameHandler {
     public static Entidade jogador;
     public static Mob adversario;
 
-    private Turno turnoAtual;
-    private int salas;
-    public static int rodada;
-    private Boolean batalha;
+    private static Turno turnoAtual;
+    private static int salaAtual;
+    private static int rodadaAtual;
+    private static Boolean emBatalha;
 
     Scanner input = new Scanner(System.in).useDelimiter("\n");
 
@@ -26,8 +26,8 @@ public class GameHandler {
     // Game Handler
     public GameHandler() {
         this.turnoAtual = Turno.JOGADOR;
-        this.salas = 1;
-        rodada = 1;
+        this.salaAtual = 1;
+        rodadaAtual = 1;
     }
 
     public void iniciarJogo() {
@@ -73,33 +73,26 @@ public class GameHandler {
 
     }
 
-    public void displayScenario(Entidade jogador, Mob adversario){
-        int armaDano;
-        try {
-            armaDano = jogador.armaAtual.getAtkExtra();
-            System.out.println(jogador.nome + " | " + jogador.vidaAtual + " / " + jogador.vidaMaxima + "HP " + jogador.listaAtributos + " | " + jogador.atkBase + " | " + jogador.armaAtual.getNome() + " (" + jogador.armaAtual.getRaridade() + "): " + armaDano + " ATK " );
-
-        } catch (NullPointerException error){
-            System.out.println(jogador.nome + " | " + jogador.vidaAtual + " / " + jogador.vidaMaxima + "HP " + jogador.listaAtributos + " | " + jogador.atkBase + " ATK " );
-        }
-
-        System.out.println(adversario.nome + " | " + adversario.vidaAtual + " / " + adversario.vidaMaxima + "HP " + adversario.listaAtributos + " | " + adversario.atkBase + " ATK | ");
+    // Exibição de cenário de jogo
+    public void displayGameScenario(Entidade jogador, Mob adversario){
+        jogador.displayEntityScenario();
+        adversario.displayEntityScenario();
     }
 
 
     public void iniciarSala(){
         // Gerenciar Spawns
-        adversario = Mob.gerarMob(adversario, salas, (salas % 5 == 0));
-        batalha = true;
+        adversario = Mob.gerarMob(adversario, salaAtual, (salaAtual % 5 == 0));
+        emBatalha = true;
 
         // Iniciar batalha
-        System.out.println("\n\n\n-= Sala " + salas + " =-");
-        while (batalha){ // Enquanto a sala não estiver completa
-            displayScenario(jogador, adversario);
+        System.out.println("\n\n\n-= Sala " + salaAtual + " =-");
+        while (emBatalha){ // Enquanto a sala não estiver completa
+            displayGameScenario(jogador, adversario);
             if (turnoAtual == Turno.JOGADOR) {
                 // Início de turno
                 jogador.defesa = false;
-                System.out.println("Rodada: " + rodada);
+                System.out.println("Rodada: " + rodadaAtual);
                 System.out.println();
 
                 //Turno das ações do jogador
@@ -108,7 +101,7 @@ public class GameHandler {
                 jogador.cooldownHabilidade--;
                 if (!jogador.handleIdle()){
                     if (jogador.defineAction(adversario)){
-                        batalha = false;
+                        emBatalha = false;
                         break;
                     }
                 }
@@ -130,7 +123,7 @@ public class GameHandler {
                 adversario.handleStatus();
                 pressEnterToContinue();
                 turnoAtual = Turno.JOGADOR; // Volta para o jogador
-                rodada++;
+                rodadaAtual++;
             }
         }
 
@@ -140,9 +133,9 @@ public class GameHandler {
             System.out.println("\nEscolha sua recompensa e vá pra próxima sala.");
 
             // Gerar loot
-            Upgrade loot1 = Upgrade.gerarItem(salas);
-            Upgrade loot2 = Upgrade.gerarItem(salas);
-            Arma loot3 = Arma.gerarArma(salas);
+            Upgrade loot1 = Upgrade.gerarItem(salaAtual);
+            Upgrade loot2 = Upgrade.gerarItem(salaAtual);
+            Arma loot3 = Arma.gerarArma(salaAtual);
 
             // Seleção de classe
             int escolha = 0;
@@ -171,17 +164,34 @@ public class GameHandler {
                     loot2.escolhaUpgrade(jogador);
                     break;
                 case 3:
-                    jogador.armaAtual = loot3;
+                    jogador.setArmaAtual(loot3);
                     break;
                 default:
                     System.out.println("Opção inválida.");
             }
 
-            salas += 1;
+            salaAtual += 1;
             iniciarSala();
         } else {
             System.out.println("\n\n-= Fim de jogo =-");
-            System.out.println("Você sobreviveu " + salas + " salas dentro da masmorra.");
+            System.out.println("Você sobreviveu " + salaAtual + " salas dentro da masmorra.");
         }
+    }
+
+    // Getters
+    public static Turno getTurnoAtual() {
+        return turnoAtual;
+    }
+
+    public static int getSalaAtual() {
+        return salaAtual;
+    }
+
+    public static int getRodadaAtual() {
+        return rodadaAtual;
+    }
+
+    public static Boolean getEmBatalha() {
+        return emBatalha;
     }
 }
