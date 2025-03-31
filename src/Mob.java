@@ -53,7 +53,7 @@ public class Mob extends Entidade{
                 }
                 cooldownHabilidade = 4;
                 System.out.println("[+Frenesi] " + nome + " começou a preparar um grande ataque...");
-                this.listaAtributos.add(Status.statusFrenesi(this, GameHandler.getRodadaAtual()));
+                this.listaAtributos.add(StatusHandler.statusFrenesi(this, GameHandler.getRodadaAtual()));
                 return false;
             } else {
                 System.out.println("[-Frenesi] " + "A fúria de " + nome + " te alcançou!");

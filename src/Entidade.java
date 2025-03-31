@@ -2,14 +2,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Entidade {
+abstract class Entidade {
+    // Função: Lidar com atributos da entidade
     protected String nome;
     protected int vidaAtual;
     protected int vidaMaxima;
     protected int atkBase;
     protected boolean defesa = false;
     protected Arma armaAtual = null;
-    protected List<Status> listaAtributos = new ArrayList<>();
+    protected List<StatusHandler> listaAtributos = new ArrayList<>();
     protected int cooldownHabilidade = 0;
 
     Scanner input = new Scanner(System.in).useDelimiter("\n");
@@ -25,7 +26,7 @@ public class Entidade {
     }
 
     // Construtor de Entidade Composto
-    public Entidade(String nome, Arma armaAtual, List<Status> listaAtributos) {
+    public Entidade(String nome, Arma armaAtual, List<StatusHandler> listaAtributos) {
         this.nome = nome;
         // this.vidaMaxima = Herda de classe;
         // this.danoBase = Herda de classe;
@@ -35,7 +36,7 @@ public class Entidade {
     }
 
 
-    // Exibição de cenário de entidade
+    // Exibição de cenário de entidade * EXTRAIR
     public void displayEntityScenario(){
         try {
             System.out.println(this.nome + " | " + this.vidaAtual + " / " + this.vidaMaxima + "HP " + this.listaAtributos + " | " + this.atkBase + " | " + this.armaAtual.getNome() + " (" + this.armaAtual.getRaridade() + "): " + this.armaAtual.getAtkExtra() + " ATK " );
@@ -47,12 +48,12 @@ public class Entidade {
 
 
 
-    // Handlers
+    // Handlers * EXTRAIR
     // Handler de Dano Causado
     public int handleDanoAtual(){
         int atkEfeito = 0;
         int armaDano = 0;
-        for (Status atributo : listaAtributos){
+        for (StatusHandler atributo : listaAtributos){
             atkEfeito += atributo.getAtkChange();
         }
 
@@ -68,10 +69,10 @@ public class Entidade {
     // Handler de Dano Recebido
     public Boolean handleDanoRecebido(int dmg){
         // Checar se Evasão ativou
-        if (Status.doesStatusExist("Evasão", listaAtributos)) {
+        if (StatusHandler.doesStatusExist("Evasão", listaAtributos)) {
             dmg -= dmg * 1;
             System.out.println("[+Evasão] " + " se esquivou!");
-            listaAtributos.remove(Status.searchStatus("Evasão", listaAtributos));
+            listaAtributos.remove(StatusHandler.searchStatus("Evasão", listaAtributos));
         }
 
         vidaAtual -= dmg;
@@ -99,7 +100,7 @@ public class Entidade {
     }
 
     // Handler de atributo
-    public List<Status> toRemove = new ArrayList<>();
+    public List<StatusHandler> toRemove = new ArrayList<>();
     public void handleStatus(){
         int dmgStatus = 0;
 
@@ -109,7 +110,7 @@ public class Entidade {
             toRemove.clear();
         }
         listaAtributos.removeAll(toRemove);
-        for (Status atributo : listaAtributos){
+        for (StatusHandler atributo : listaAtributos){
             dmgStatus += atributo.getDmgStatus();
             atributo.tickStatus(this);
         }
@@ -121,7 +122,7 @@ public class Entidade {
 
     // Handler de turno inativo
     public boolean handleIdle(){
-        for (Status atributo : listaAtributos){
+        for (StatusHandler atributo : listaAtributos){
             if (atributo.isStatusIdle()){
                 System.out.println(atributo.getStatusIdleMsg());
                 return true;
