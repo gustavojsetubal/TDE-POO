@@ -10,7 +10,7 @@ public class Mob extends Entidade{
         super(nome, armaAtual);
         this.vidaMaxima = vidaMaxima;
         this.vidaAtual = vidaMaxima;
-        this.atkBase = atkBase;
+        this.baseAtk = atkBase;
         this.defesa = false;
         this.isBoss = isBoss;
 
@@ -53,11 +53,11 @@ public class Mob extends Entidade{
                 }
                 cooldownHabilidade = 4;
                 System.out.println("[+Frenesi] " + nome + " começou a preparar um grande ataque...");
-                this.listaAtributos.add(StatusHandler.statusFrenesi(this, GameHandler.getRodadaAtual()));
+                this.statusList.add(StatusHandler.statusFrenesi(this, GameHandler.getRodadaAtual()));
                 return false;
             } else {
                 System.out.println("[-Frenesi] " + "A fúria de " + nome + " te alcançou!");
-                return GameHandler.jogador.handleDanoRecebido(atkBase * 2);
+                return GameHandler.jogador.handleDanoRecebido(baseAtk * 2);
             }
         }
         return false;

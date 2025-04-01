@@ -4,7 +4,7 @@ public class Ladino extends Entidade {
         super(nome, armaAtual);
         this.vidaMaxima = 300;
         this.vidaAtual = vidaMaxima;
-        this.atkBase = 175;
+        this.baseAtk = 175;
     }
 
     @Override // Evasão: habilidade ativa de classe
@@ -16,7 +16,7 @@ public class Ladino extends Entidade {
             }
             cooldownHabilidade = 3;
             System.out.println("[+Evasão] " + nome + " se prepara pra desviar!");
-            this.listaAtributos.add(StatusHandler.statusEvasao(this, GameHandler.getRodadaAtual()));
+            this.statusList.add(StatusHandler.statusEvasao(this, GameHandler.getRodadaAtual()));
         } else if (!estado){
             System.out.println("[-Evasão] " + nome + " abaixa  a guarda...");
         }

@@ -8,7 +8,7 @@ public class Mago extends Entidade {
         super(nome, armaAtual);
         this.vidaMaxima = 200;
         this.vidaAtual = vidaMaxima;
-        this.atkBase = 250;
+        this.baseAtk = 250;
     }
 
     @Override // Grimório: habilidade ativa de classe
@@ -29,7 +29,7 @@ public class Mago extends Entidade {
 
             if (action >= 66){
                 System.out.println("[Grimório] " + nome + " dispara uma bola de fogo!");
-                return GameHandler.adversario.handleDanoRecebido(atkBase);
+                return GameHandler.adversario.handleDanoRecebido(baseAtk);
             } else if (action >= 33){
                 System.out.println("[Grimório] " + nome + " cura suas feridas!");
                 this.handleCura((int) ((int) vidaMaxima * 0.5));

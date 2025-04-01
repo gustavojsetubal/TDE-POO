@@ -30,6 +30,7 @@ public class GameHandler {
         rodadaAtual = 1;
     }
 
+
     public void iniciarJogo() {
         System.out.println("-= cmdventure =- \n");
         System.out.println("-= Insira um nome =-");

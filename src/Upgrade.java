@@ -48,7 +48,7 @@ public class Upgrade {
     }
 
     public void escolhaUpgrade (Entidade jogador){
-        jogador.atkBase += aumentoDano;
+        jogador.baseAtk += aumentoDano;
         jogador.vidaMaxima += aumentoVida;
         jogador.vidaAtual += curaVida;
     }
