@@ -11,7 +11,6 @@ public class Guerreiro extends Entidade {
     public boolean habilidade(Boolean estado) {
         if (cooldownHabilidade > 0) {
             System.out.println("A habilidade falhou!");
-            System.out.println("teste");
         } else {
             if (estado){
                 cooldownHabilidade = 1;
