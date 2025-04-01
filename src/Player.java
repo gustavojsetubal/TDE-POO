@@ -1,3 +1,5 @@
+import java.util.Random;
+
 abstract class Player extends Entidade {
     // Função: atribuir o aspecto de jogabilidade ao jogador
     protected AbilityHandler abilityHandler;
@@ -12,6 +14,7 @@ abstract class Player extends Entidade {
         protected int cooldownHabilidadeAtual;
         protected static int cooldownHabilidade;
         protected abstract boolean usarHabilidade(boolean estado);
+        public abstract boolean tickCooldownHabilidade();
     }
 
     public boolean defineAction(Entidade oponente){
@@ -71,17 +74,19 @@ class Guerreiro extends Player {
         protected int cooldownHabilidadeAtual = 0;
         protected static int cooldownHabilidade = 1;
 
+        protected Status statusHabilidade = null;
         public boolean usarHabilidade(boolean estado) {
-            if (cooldownHabilidadeAtual > 0) { // Se o cooldown ainda estiver em andamento
-                System.out.println("A habilidade falhou!");
-            } else {
-                if (estado){ // true indica que a habilidade está sendo ativada
-                    cooldownHabilidadeAtual = 1;
-                    StatusHandler.printStatusMessage(/*Encontrar instância de StatusFuria em statusList*/, "inicio-efeito");
-                    statusHandler.addStatus("StatusFuria");
-                } else { // false indica que a habilidade está sendo ativada
-                    System.out.println("[-Fúria] " + "A raiva de " + nome + " se esvaiu...");
+            if (estado){ // true indica que a habilidade está sendo ativada
+                if (cooldownHabilidade > 0) { // Se o cooldown estiver ativo
+                    System.out.println("A habilidade falhou!");
+                    return false;
                 }
+                cooldownHabilidade = 1;
+                statusHabilidade = statusHandler.addStatus("StatusFuria");
+                statusHandler.printStatusMessage(statusHabilidade, "inicio-efeito");
+            } else if (!estado){ // false indica que a habilidade está sendo desativada
+                statusHandler.printStatusMessage(statusHabilidade, "fim-efeito");
+                statusHabilidade = null;
             }
             return false;
         }
@@ -99,7 +104,7 @@ class Guerreiro extends Player {
 
 }
 
-public class Ladino extends Player {
+class Ladino extends Player {
     // Atributos da Classe
     public Ladino(String nome, Arma armaAtual) {
         super(nome, armaAtual);
@@ -109,22 +114,24 @@ public class Ladino extends Player {
     }
 
 
-    // Evasão: habilidade ativa de classe
+    // Evasão: habilidade ativa da Classe
     class AbilityHandler{
         protected int cooldownHabilidadeAtual = 0;
         protected static int cooldownHabilidade = 3;
 
+        protected Status statusHabilidade = null;
         public boolean usarHabilidade(boolean estado) {
-            if (cooldownHabilidadeAtual > 0) { // Se o cooldown ainda estiver em andamento
-                System.out.println("A habilidade falhou!");
-            } else {
-                if (estado){ // true indica que a habilidade está sendo ativada
-                    cooldownHabilidadeAtual = 1;
-                    System.out.println("[+Fúria] " + " se enfurece!");
-                    statusHandler.addStatus("statusFuria");
-                } else { // false indica que a habilidade está sendo ativada
-                    System.out.println("[-Fúria] " + "A raiva de " + nome + " se esvaiu...");
+            if (estado){ // true indica que a habilidade está sendo ativada
+                if (cooldownHabilidade > 0) { // Se o cooldown estiver ativo
+                    System.out.println("A habilidade falhou!");
+                    return false;
                 }
+                cooldownHabilidade = 3;
+                statusHabilidade = statusHandler.addStatus("StatusEvasao");
+                statusHandler.printStatusMessage(statusHabilidade, "inicio-efeito");
+            } else if (!estado){ // false indica que a habilidade está sendo desativada
+                statusHandler.printStatusMessage(statusHabilidade, "fim-efeito");
+                statusHabilidade = null;
             }
             return false;
         }
@@ -140,6 +147,55 @@ public class Ladino extends Player {
 
     }
 
+}
+
+class Mago extends Player {
+    // Atributos da Classe
+    public Mago(String nome, Arma armaAtual) {
+        super(nome, armaAtual);
+        this.vidaMaxima = 200;
+        this.vidaAtual = vidaMaxima;
+        this.baseAtk = 250;
+    }
+
+
+    // Grimório: habilidade ativa da Classe
+    class AbilityHandler{
+        static Random rng = new Random(System.currentTimeMillis());
+
+        protected int cooldownHabilidadeAtual = 0;
+        protected static int cooldownHabilidade = 3;
+
+        protected Status statusHabilidade = null;
+        public boolean usarHabilidade(Boolean estado) {
+            if (cooldownHabilidade > 0) {
+                System.out.println("A habilidade falhou!");
+            } else {
+                cooldownHabilidade = 2;
+                System.out.println("[Grimório] " + nome + " prepara uma magia poderosa...");
+
+                int action = 0;
+                action = rng.nextInt(100);
+
+                // Cura: 33%
+                // Dano: 33%
+                // Backfire: 33%
+
+                if (action >= 66){
+                    System.out.println("[Grimório] " + nome + " dispara uma bola de fogo!");
+                    return GameHandler.adversario.healthHandler.handleDanoRecebido(damageHandler.handleDanoAtual(baseAtk, false));
+                } else if (action >= 33){
+                    System.out.println("[Grimório] " + nome + " cura suas feridas!");
+                    healthHandler.handleCura((int) ((int) vidaMaxima * 0.5));
+                } else if (action < 33){
+                    System.out.println("[Grimório] " + nome + " errou o feitiço!");
+                    healthHandler.handleDanoRecebido((int) (vidaMaxima * 0.2));
+                }
+            }
+            return false;
+        }
+
+    }
 
 }
 

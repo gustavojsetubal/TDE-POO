@@ -186,12 +186,14 @@ abstract class Entidade {
         // Função: organizar adição, ticking e proccing de status.
 
         // Criação do status
-        public void addStatus(String statusName){
+        public Status addStatus(String statusName){
             try {
                 Class<?> aClass = Class.forName(statusName);
 
                 if (Status.class.isAssignableFrom(aClass)){
-                    statusList.add((Status) aClass.getDeclaredConstructor().newInstance());
+                    Status addedStatus = (Status) aClass.getDeclaredConstructor().newInstance();
+                    statusList.add(addedStatus);
+                    return addedStatus;
                 } else {
                     throw new IllegalArgumentException("[DEBUG] A classe indicada não é subclasse de Status");
                 }
@@ -199,13 +201,14 @@ abstract class Entidade {
                 System.out.println("[DEBUG] Status não encontrado / inválido.");
                 e.printStackTrace();
             }
+            return null;
         }
 
         // Lidar com mensagens de status
-        public static void printStatusMessage(Status targetStatus, String statusKey){
+        public void printStatusMessage(Status targetStatus, String statusKey){
             Map<String, String> textoStatus = targetStatus.getTextoStatus();
             if(textoStatus.get(statusKey) != null) {
-                System.out.println(textoStatus.get(statusKey));
+                System.out.println((textoStatus.get(statusKey)).replace("%nome%", nome));
             } else {
                 System.out.println("[DEBUG] Chave de mensagem tem valor nulo.");
             }

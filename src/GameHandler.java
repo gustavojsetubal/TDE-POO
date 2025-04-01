@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class GameHandler {
-    public static Entidade jogador;
+    public static Player jogador;
     public static Mob adversario;
 
     private static Turno turnoAtual;
@@ -99,7 +99,7 @@ public class GameHandler {
                 //Turno das ações do jogador
                 System.out.println("Turno: " + turnoAtual);
                 System.out.println();
-                jogador.cooldownHabilidade--;
+                jogador.abilityHandler.tickCooldownHabilidade();
                 if (!jogador.handleIdle()){
                     if (jogador.defineAction(adversario)){
                         emBatalha = false;
@@ -115,7 +115,7 @@ public class GameHandler {
                 adversario.defesa = false;
                 System.out.println("Turno: " + turnoAtual);
                 System.out.println("\n");
-                adversario.cooldownHabilidade--;
+                adversario./*tickCooldownHabilidade*/;
                 if (!adversario.handleIdle()){
                     if (adversario.defineAction(jogador)){
                         break;
