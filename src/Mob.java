@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Mob extends Entidade{
+public class Mob extends Entity {
     static Random rng = new Random(System.currentTimeMillis());
     public boolean isBoss;
 
@@ -73,7 +73,7 @@ public class Mob extends Entidade{
     // Cura: 10% (10 - 0)
     // Habilidade(BOSS): 15% da chance de defesa
 
-    public boolean defineAction(Entidade jogador){
+    public boolean defineAction(Entity jogador){
         int action = 0;
         if ((double) vidaAtual / vidaMaxima < 0.25){ // Se a vida for menor que 25%
             action = rng.nextInt(100);

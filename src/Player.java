@@ -1,6 +1,6 @@
 import java.util.Random;
 
-abstract class Player extends Entidade {
+abstract class Player extends Entity {
     // Função: atribuir o aspecto de jogabilidade ao jogador
     protected AbilityHandler abilityHandler;
 
@@ -17,7 +17,7 @@ abstract class Player extends Entidade {
         public abstract boolean tickCooldownHabilidade();
     }
 
-    public boolean defineAction(Entidade oponente){
+    public boolean defineAction(Entity oponente){
         System.out.println("Escolha sua ação:");
 
         // Seleção de ação

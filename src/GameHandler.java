@@ -75,7 +75,7 @@ public class GameHandler {
     }
 
     // Exibição de cenário de jogo
-    public void displayGameScenario(Entidade jogador, Mob adversario){
+    public void displayGameScenario(Entity jogador, Mob adversario){
         jogador.displayEntityScenario();
         adversario.displayEntityScenario();
     }

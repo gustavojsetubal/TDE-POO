@@ -47,7 +47,7 @@ public class Upgrade {
         return "Upgrade inválido.";
     }
 
-    public void escolhaUpgrade (Entidade jogador){
+    public void escolhaUpgrade (Entity jogador){
         jogador.baseAtk += aumentoDano;
         jogador.vidaMaxima += aumentoVida;
         jogador.vidaAtual += curaVida;
